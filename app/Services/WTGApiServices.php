@@ -185,7 +185,7 @@ class WTGApiServices
     private function prepareRequest(): PendingRequest
     {
         return Http::withUrlParameters([
-            'domain' => 'http://127.0.0.1:8000',
+            'domain' => config('app.wtgtestapiurl'),
         ]);
     }
 }
