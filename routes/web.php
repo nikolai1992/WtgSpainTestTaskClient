@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Dashboard\TaskController;
-use App\Http\Controllers\Dashboard\TeamController;
+use App\Http\Controllers\Dashboard\Task\TaskCommentController;
+use App\Http\Controllers\Dashboard\Task\TaskController;
+use App\Http\Controllers\Dashboard\Team\TeamController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +22,8 @@ Route::group([
     Route::get('/', [App\Http\Controllers\Dashboard\DashboardController::class, 'index'])->name('dashboard');
     Route::resource('task', TaskController::class)->except('index', 'destroy');
     Route::get('/task/{id}', [TaskController::class, 'destroy'])->name('task.destroy');
+
+    Route::resource('task_comment', TaskCommentController::class)->except('index');
 
     Route::get('/team/add-member/{teamId}', [TeamController::class, 'addMember'])->name('team.addMember');
     Route::post('/team/add-member/{teamId}', [TeamController::class, 'addMemberRequest'])->name('team.addMemberRequest');

@@ -182,6 +182,39 @@ class WTGApiServices
         }
     }
 
+    public function showComments(int $taskId)
+    {
+        $token = session()->get('auth_token');
+        $response = $this->prepareRequest()
+            ->withToken($token)
+            ->get('{+domain}/api/tasks/' . $taskId . '/comments');
+
+        if ($response->successful()) {
+            return $response->object()->data;
+        }
+    }
+    public function deleteComment(int $id)
+    {
+        $token = session()->get('auth_token');
+        $response = $this->prepareRequest()
+            ->withToken($token)
+            ->delete('{+domain}/api/comments/' . $id);
+
+        if ($response->successful()) {
+            return $response->object()->data;
+        }
+    }
+    public function storeComment(int $taskId, array $data)
+    {
+        $token = session()->get('auth_token');
+        $response = $this->prepareRequest()
+            ->withToken($token)
+            ->post('{+domain}/api/tasks/' . $taskId . '/comments', $data);
+        if ($response->successful()) {
+            return $response->object()->data;
+        }
+    }
+
     private function prepareRequest(): PendingRequest
     {
         return Http::withUrlParameters([

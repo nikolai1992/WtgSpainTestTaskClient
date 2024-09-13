@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard;
+namespace App\Http\Controllers\Dashboard\Task;
 
 use App\Enums\TaskStatusEnum;
 use App\Http\Controllers\Controller;
@@ -8,7 +8,6 @@ use App\Http\Requests\Task\TaskStoreRequest;
 use App\Http\Requests\Task\TaskUpdateRequest;
 use App\Services\WTGApiServices;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -46,8 +45,9 @@ class TaskController extends Controller
         $task = $this->wtgApiService->showTask($id);
         $task->created_at = Carbon::parse($task->created_at)->format('Y-m-d H:i:s');
         $task->updated_at = Carbon::parse($task->updated_at)->format('Y-m-d H:i:s');
+        $comments = $this->wtgApiService->showComments($id);
 
-        return view('dashboard.task.show', compact('task'));
+        return view('dashboard.task.show', compact('task', 'comments'));
 	}
 
 	public function edit($id)
